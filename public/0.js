@@ -46,7 +46,9 @@ __webpack_require__.r(__webpack_exports__);
         header: false,
         dynamicTyping: true,
         complete: function complete(data) {
-          vm.$root.csv_data = data.data;
+          var x = data.data;
+          vm.$root.csv_headers = x.shift();
+          vm.$root.csv_data = x;
         }
       });
     },
@@ -55,11 +57,11 @@ __webpack_require__.r(__webpack_exports__);
       var op = "";
       var data = this.$root.csv_data;
 
-      for (i = 1; i < data.length; i++) {
+      for (i = 0; i < data.length; i++) {
         op += "<tr><td class='border border-black'>" + data[i].join("</td><td class='border border-black'>") + "</td></tr>";
       }
 
-      this.table_data = "<thead class='bg-black text-white'><tr><td class='border border-white'>" + data[0].join("</td><td class='border border-white'>") + "</td></tr></thead><tbody>" + op + "</tbody>";
+      this.table_data = "<thead class='bg-black text-white'><tr><th class='border border-white'>" + this.$root.csv_headers.join("</th><th class='border border-white'>") + "</th></tr></thead><tbody>" + op + "</tbody>";
     }
   }
 });

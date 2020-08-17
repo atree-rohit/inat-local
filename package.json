@@ -20,6 +20,7 @@
         "vue-template-compiler": "^2.6.11"
     },
     "dependencies": {
+        "d3": "^5.16.0",
         "jquery": "^3.5.1",
         "laravel-mix-tailwind": "^0.1.0",
         "papaparse": "^5.2.0",
