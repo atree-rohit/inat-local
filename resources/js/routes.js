@@ -1,7 +1,7 @@
 import Home from './components/Home';
-import Upload from './components/Upload';
-
 import NotFound from './components/NotFound';
+
+let Upload = () => import('./components/Upload');
 
 export default {
 	mode:'history',

@@ -7,7 +7,6 @@
         <title>Laracasts Assets</title>
         <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
         <link rel="stylesheet" type="text/css" href="/css/app.css">
-
     </head>
 
     <body class="font-sans">
@@ -17,7 +16,7 @@
             </header>
             <div class="container px-8 pb-32">
                 <main class="flex">
-                    <aside class="w-64 pt-8">
+                    <aside class="w-1/6 pt-8">
                         <section class="mb-10">
                             <h5 class="text-base  uppercase font-bold mb-5">menu</h5>
                             <ul class="list-reset">
@@ -26,7 +25,7 @@
                             </ul>
                         </section>
                     </aside>
-                    <div class="primary flex-1">
+                    <div class="w-5/6 primary flex-1">
                         <router-view></router-view>
                     </div>
                 </main>
