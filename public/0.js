@@ -35,8 +35,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      table_data: null,
-      results: null
+      table_data: null
     };
   },
   methods: {
@@ -47,14 +46,14 @@ __webpack_require__.r(__webpack_exports__);
         header: false,
         dynamicTyping: true,
         complete: function complete(data) {
-          vm.results = data.data;
+          vm.$root.csv_data = data.data;
         }
       });
     },
     populateTable: function populateTable() {
       var i, j;
       var op = "";
-      var data = this.results;
+      var data = this.$root.csv_data;
 
       for (i = 1; i < data.length; i++) {
         op += "<tr><td class='border border-black'>" + data[i].join("</td><td class='border border-black'>") + "</td></tr>";
@@ -87,6 +86,7 @@ var render = function() {
     _vm._v(" "),
     _c("section", { attrs: { id: "content" } }, [
       _c("input", {
+        staticClass: "btn btn-green",
         attrs: { type: "file", id: "files", multiple: "" },
         on: { change: _vm.handleFileSelect }
       }),

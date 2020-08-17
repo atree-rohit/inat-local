@@ -4,7 +4,7 @@
 
 		<section id="content">
 
-			<input type="file" id="files" multiple @change="handleFileSelect" />
+			<input type="file" id="files" multiple @change="handleFileSelect" class="btn btn-green" />
 			<hr />
 			<h2>FileInfo</h2>
 			<div id="file-info"></div>
@@ -23,8 +23,7 @@
 	export default{
 		data () {
 			return {
-				table_data: null,
-				results: null,
+				table_data: null
 			}
 		},
 		methods: {
@@ -36,22 +35,20 @@
 					header: false,
 					dynamicTyping: true,
 					complete: function(data) {
-						vm.results = data.data;
+						vm.$root.csv_data = data.data;
 					}
 				});
 			},
 			populateTable : function(){
 				var i, j;
 				var  op = "";
-				var data = this.results;
+				var data = this.$root.csv_data;
 
 				for( i=1 ; i<data.length ; i++ ){
 					op += "<tr><td class='border border-black'>" + data[i].join("</td><td class='border border-black'>") + "</td></tr>";
 				}
 				this.table_data = "<thead class='bg-black text-white'><tr><td class='border border-white'>" + data[0].join("</td><td class='border border-white'>") + "</td></tr></thead><tbody>"+op+"</tbody>";
 			}
-
-
 		}
-};
+	};
 </script>

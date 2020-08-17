@@ -7,6 +7,9 @@ Vue.use(VueRouter);
 
 let app = new Vue ({
 	el: '#app',
+	data: {
+		csv_data: null,
+	},
 
 	router: new VueRouter(routes)
 });

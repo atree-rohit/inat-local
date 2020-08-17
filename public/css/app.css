@@ -18057,6 +18057,15 @@ video {
   background-color: rgba(43, 108, 176, var(--bg-opacity));
 }
 
+.btn-green {
+  --bg-opacity: 1;
+  background-color: #48bb78;
+  background-color: rgba(72, 187, 120, var(--bg-opacity));
+  --text-opacity: 1;
+  color: #fff;
+  color: rgba(255, 255, 255, var(--text-opacity));
+}
+
 @media (min-width: 640px) {
   .sm\:container {
     width: 100%;
