@@ -26,7 +26,7 @@ export default{
 			var range;
 
 			data.forEach(function (a) {
-				domain.push(new Date(a[2]));
+				domain.push(a[2]);
 
 			});
 				console.log(domain);

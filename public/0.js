@@ -59,6 +59,7 @@ __webpack_require__.r(__webpack_exports__);
 
       for (i = 0; i < data.length; i++) {
         op += "<tr><td class='border border-black'>" + data[i].join("</td><td class='border border-black'>") + "</td></tr>";
+        if (i == 100) break;
       }
 
       this.table_data = "<thead class='bg-black text-white'><tr><th class='border border-white'>" + this.$root.csv_headers.join("</th><th class='border border-white'>") + "</th></tr></thead><tbody>" + op + "</tbody>";

@@ -2125,7 +2125,7 @@ __webpack_require__.r(__webpack_exports__);
       var domain = new Array();
       var range;
       data.forEach(function (a) {
-        domain.push(new Date(a[2]));
+        domain.push(a[2]);
       });
       console.log(domain);
     }
