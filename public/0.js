@@ -49,6 +49,7 @@ __webpack_require__.r(__webpack_exports__);
           var x = data.data;
           vm.$root.csv_headers = x.shift();
           vm.$root.csv_data = x;
+          vm.$root.data_set = true;
         }
       });
     },
