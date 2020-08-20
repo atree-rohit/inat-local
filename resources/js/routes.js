@@ -3,9 +3,7 @@ import Temporal from './components/Temporal';
 import Spatial from './components/Spatial';
 import Taxonomic from './components/Taxonomic';
 import NotFound from './components/NotFound';
-
-
-let Upload = () => import('./components/Upload');
+import Upload from './components/Upload';
 
 export default {
 	mode:'history',

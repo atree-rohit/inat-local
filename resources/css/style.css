@@ -1,0 +1,32 @@
+body{
+  margin: 0px;
+  overflow:hidden;
+/*   background-color: #cce; */
+}
+
+circle{
+  fill: steelblue;
+  opacity: 1;
+}
+
+text{
+  font-family: sans-serif;
+}
+
+.tick text{
+  font-size: 2.6em;
+  fill: #635F5D;
+}
+.axis-label{
+  font-size: 5em;
+  fill: #C0C0BB;
+}
+
+.tick line{
+  stroke: #C0C0BB;
+}
+
+.title{
+  font-size: 3.2em;
+  fill: #635F5D;
+}

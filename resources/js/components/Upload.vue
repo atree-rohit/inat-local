@@ -9,9 +9,9 @@
 			<h2>FileInfo</h2>
 			<div id="file-info"></div>
 			<hr />
-			<button @click="populateTable" class="btn btn-blue">View Data</button>
+			<!-- <button @click="populateTable" class="btn btn-blue">View Data</button> -->
 			<div class="h-64 w-auto overflow-scroll">
-			<table v-html="table_data" class='text-xs border-collapsea'></table>
+				<pre v-html="table_data" class="text-4xl"></pre>
 			</div>
 		</section>
 
@@ -19,41 +19,24 @@
 </template>
 
 <script>
-	import Papa from 'papaparse';
-	export default{
-		data () {
-			return {
-				table_data: null
-			}
-		},
-		methods: {
-			handleFileSelect: function(evt) {
-				var file = evt.target.files[0];
-				var vm = this;
-
-				Papa.parse(file, {
-					header: false,
-					dynamicTyping: true,
-					complete: function(data) {
-						var x = data.data;
-						vm.$root.csv_headers = x.shift();
-						vm.$root.csv_data = x;
-						vm.$root.data_set = true;
-					}
-				});
-			},
-			populateTable : function(){
-				var i, j;
-				var  op = "";
-				var data = this.$root.csv_data;
-
-				for( i=0 ; i<data.length ; i++ ){
-					op += "<tr><td class='border border-black'>" + data[i].join("</td><td class='border border-black'>") + "</td></tr>";
-					if(i==100)
-						break;
-				}
-				this.table_data = "<thead class='bg-black text-white'><tr><th class='border border-white'>" + this.$root.csv_headers.join("</th><th class='border border-white'>") + "</th></tr></thead><tbody>"+op+"</tbody>";
-			}
+import * as d3 from 'd3';
+export default{
+	data () {
+		return {
+			table_data: null,
+			reader: new FileReader()
 		}
-	};
+	},
+	methods: {
+		handleFileSelect: function(e) {
+			this.reader.addEventListener("load", this.parseFile, false);
+			this.reader.readAsText(e.target.files[0]);
+		},
+
+		parseFile : function(){
+			this.$root.csv_data = d3.csv(this.reader.result);
+			this.$root.data_set = true;
+		}
+	}
+};
 </script>

@@ -11,6 +11,7 @@
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var papaparse__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! papaparse */ "./node_modules/papaparse/papaparse.min.js");
 /* harmony import */ var papaparse__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(papaparse__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var d3__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! d3 */ "./node_modules/d3/index.js");
 //
 //
 //
@@ -32,6 +33,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -47,6 +49,8 @@ __webpack_require__.r(__webpack_exports__);
         dynamicTyping: true,
         complete: function complete(data) {
           var x = data.data;
+          var y = d3__WEBPACK_IMPORTED_MODULE_1__["csv"].parseRows(x);
+          console.log(y);
           vm.$root.csv_headers = x.shift();
           vm.$root.csv_data = x;
           vm.$root.data_set = true;

@@ -1,50 +1,6 @@
 /******/ (function(modules) { // webpackBootstrap
-/******/ 	// install a JSONP callback for chunk loading
-/******/ 	function webpackJsonpCallback(data) {
-/******/ 		var chunkIds = data[0];
-/******/ 		var moreModules = data[1];
-/******/
-/******/
-/******/ 		// add "moreModules" to the modules object,
-/******/ 		// then flag all "chunkIds" as loaded and fire callback
-/******/ 		var moduleId, chunkId, i = 0, resolves = [];
-/******/ 		for(;i < chunkIds.length; i++) {
-/******/ 			chunkId = chunkIds[i];
-/******/ 			if(Object.prototype.hasOwnProperty.call(installedChunks, chunkId) && installedChunks[chunkId]) {
-/******/ 				resolves.push(installedChunks[chunkId][0]);
-/******/ 			}
-/******/ 			installedChunks[chunkId] = 0;
-/******/ 		}
-/******/ 		for(moduleId in moreModules) {
-/******/ 			if(Object.prototype.hasOwnProperty.call(moreModules, moduleId)) {
-/******/ 				modules[moduleId] = moreModules[moduleId];
-/******/ 			}
-/******/ 		}
-/******/ 		if(parentJsonpFunction) parentJsonpFunction(data);
-/******/
-/******/ 		while(resolves.length) {
-/******/ 			resolves.shift()();
-/******/ 		}
-/******/
-/******/ 	};
-/******/
-/******/
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
-/******/
-/******/ 	// object to store loaded and loading chunks
-/******/ 	// undefined = chunk not loaded, null = chunk preloaded/prefetched
-/******/ 	// Promise = chunk loading, 0 = chunk loaded
-/******/ 	var installedChunks = {
-/******/ 		"/js/app": 0
-/******/ 	};
-/******/
-/******/
-/******/
-/******/ 	// script path function
-/******/ 	function jsonpScriptSrc(chunkId) {
-/******/ 		return __webpack_require__.p + "" + ({}[chunkId]||chunkId) + ".js"
-/******/ 	}
 /******/
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
@@ -70,67 +26,6 @@
 /******/ 		return module.exports;
 /******/ 	}
 /******/
-/******/ 	// This file contains only the entry chunk.
-/******/ 	// The chunk loading function for additional chunks
-/******/ 	__webpack_require__.e = function requireEnsure(chunkId) {
-/******/ 		var promises = [];
-/******/
-/******/
-/******/ 		// JSONP chunk loading for javascript
-/******/
-/******/ 		var installedChunkData = installedChunks[chunkId];
-/******/ 		if(installedChunkData !== 0) { // 0 means "already installed".
-/******/
-/******/ 			// a Promise means "currently loading".
-/******/ 			if(installedChunkData) {
-/******/ 				promises.push(installedChunkData[2]);
-/******/ 			} else {
-/******/ 				// setup Promise in chunk cache
-/******/ 				var promise = new Promise(function(resolve, reject) {
-/******/ 					installedChunkData = installedChunks[chunkId] = [resolve, reject];
-/******/ 				});
-/******/ 				promises.push(installedChunkData[2] = promise);
-/******/
-/******/ 				// start chunk loading
-/******/ 				var script = document.createElement('script');
-/******/ 				var onScriptComplete;
-/******/
-/******/ 				script.charset = 'utf-8';
-/******/ 				script.timeout = 120;
-/******/ 				if (__webpack_require__.nc) {
-/******/ 					script.setAttribute("nonce", __webpack_require__.nc);
-/******/ 				}
-/******/ 				script.src = jsonpScriptSrc(chunkId);
-/******/
-/******/ 				// create error before stack unwound to get useful stacktrace later
-/******/ 				var error = new Error();
-/******/ 				onScriptComplete = function (event) {
-/******/ 					// avoid mem leaks in IE.
-/******/ 					script.onerror = script.onload = null;
-/******/ 					clearTimeout(timeout);
-/******/ 					var chunk = installedChunks[chunkId];
-/******/ 					if(chunk !== 0) {
-/******/ 						if(chunk) {
-/******/ 							var errorType = event && (event.type === 'load' ? 'missing' : event.type);
-/******/ 							var realSrc = event && event.target && event.target.src;
-/******/ 							error.message = 'Loading chunk ' + chunkId + ' failed.\n(' + errorType + ': ' + realSrc + ')';
-/******/ 							error.name = 'ChunkLoadError';
-/******/ 							error.type = errorType;
-/******/ 							error.request = realSrc;
-/******/ 							chunk[1](error);
-/******/ 						}
-/******/ 						installedChunks[chunkId] = undefined;
-/******/ 					}
-/******/ 				};
-/******/ 				var timeout = setTimeout(function(){
-/******/ 					onScriptComplete({ type: 'timeout', target: script });
-/******/ 				}, 120000);
-/******/ 				script.onerror = script.onload = onScriptComplete;
-/******/ 				document.head.appendChild(script);
-/******/ 			}
-/******/ 		}
-/******/ 		return Promise.all(promises);
-/******/ 	};
 /******/
 /******/ 	// expose the modules object (__webpack_modules__)
 /******/ 	__webpack_require__.m = modules;
@@ -183,16 +78,6 @@
 /******/
 /******/ 	// __webpack_public_path__
 /******/ 	__webpack_require__.p = "/";
-/******/
-/******/ 	// on error function for async loading
-/******/ 	__webpack_require__.oe = function(err) { console.error(err); throw err; };
-/******/
-/******/ 	var jsonpArray = window["webpackJsonp"] = window["webpackJsonp"] || [];
-/******/ 	var oldJsonpFunction = jsonpArray.push.bind(jsonpArray);
-/******/ 	jsonpArray.push = webpackJsonpCallback;
-/******/ 	jsonpArray = jsonpArray.slice();
-/******/ 	for(var i = 0; i < jsonpArray.length; i++) webpackJsonpCallback(jsonpArray[i]);
-/******/ 	var parentJsonpFunction = oldJsonpFunction;
 /******/
 /******/
 /******/ 	// Load entry module and return exports
@@ -2108,26 +1993,123 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      xxx: null
+    };
+  },
+  methods: {
+    temporalData: function temporalData() {
+      var _this = this;
+
+      var data = this.$root.csv_data.then(function (data) {
+        data.forEach(function (d) {
+          d.id = +d.id;
+          d.observed_on = new Date(d.observed_on).toLocaleDateString();
+        });
+
+        _this.render(data);
+      });
+    },
+    render: function render(data) {
+      var margin = {
+        top: 10,
+        right: 30,
+        bottom: 30,
+        left: 40
+      },
+          width = 960 - margin.left - margin.right,
+          height = 500 - margin.top - margin.bottom;
+
+      var xValue = function xValue(d) {
+        return d.observed_on;
+      };
+
+      var xAxisLabel = "Time";
+
+      var yValue = function yValue(d) {
+        return d.id;
+      };
+
+      var yAxisLabel = "Observations";
+      var title = "".concat(yAxisLabel, " vs. ").concat(xAxisLabel);
+      var circleRadius = 15;
+      var xScale = d3__WEBPACK_IMPORTED_MODULE_0__["scaleTime"]().domain(d3__WEBPACK_IMPORTED_MODULE_0__["extent"](data, xValue)).range([0, width]).nice();
+      var yScale = d3__WEBPACK_IMPORTED_MODULE_0__["scaleLinear"]().range([height, 0]).nice();
+      var histogram = d3__WEBPACK_IMPORTED_MODULE_0__["histogram"]().value(function (d) {
+        return d.observed_on;
+      }).domain(xScale.domain()).thresholds(xScale.ticks(d3__WEBPACK_IMPORTED_MODULE_0__["timeMonth"]));
+      var svg = d3__WEBPACK_IMPORTED_MODULE_0__["select"]("#svg-area").append("svg").attr("width", width + margin.left + margin.right).attr("height", height + margin.top + margin.bottom).append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+      var bins = histogram(data);
+      yScale.domain([0, d3__WEBPACK_IMPORTED_MODULE_0__["max"](bins, function (d) {
+        return d.length;
+      })]);
+      svg.selectAll("rect").data(bins).enter().append("rect").attr("class", "bar").attr("x", 1).attr("transform", function (d) {
+        console.log(xScale(d.x1));
+        return "translate(".concat(xScale(d.x0), ", ").concat(yScale(d.length), " )");
+      }) // .attr("width", function(d) { return xScale(d.x1) - xScale(d.x0) ; })
+      .attr("width", 10).attr("height", function (d) {
+        return height - yScale(d.length);
+      }); // add the x Axis
+
+      svg.append("g").attr("transform", "translate(0," + height + ")").call(d3__WEBPACK_IMPORTED_MODULE_0__["axisBottom"](xScale)); // add the y Axis
+
+      svg.append("g").call(d3__WEBPACK_IMPORTED_MODULE_0__["axisLeft"](yScale));
+      svg.append('text').attr('class', 'title').attr('y', -10).text(title);
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Upload.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Upload.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var d3__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! d3 */ "./node_modules/d3/index.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      dates: null,
-      monthly_obv: null
+      table_data: null,
+      reader: new FileReader()
     };
   },
   methods: {
-    temporalData: function temporalData() {
-      var data = this.$root.csv_data;
-      var op;
-      var domain = new Array();
-      var range;
-      data.forEach(function (a) {
-        domain.push(a[2]);
-      });
-      console.log(domain);
+    handleFileSelect: function handleFileSelect(e) {
+      this.reader.addEventListener("load", this.parseFile, false);
+      this.reader.readAsText(e.target.files[0]);
+    },
+    parseFile: function parseFile() {
+      this.$root.csv_data = d3__WEBPACK_IMPORTED_MODULE_0__["csv"](this.reader.result);
+      this.$root.data_set = true;
     }
   }
 });
@@ -60136,7 +60118,56 @@ var render = function() {
       _vm._v("Calculate")
     ]),
     _vm._v(" "),
-    _c("div", [_vm._v("\n\t\t" + _vm._s(_vm.dates) + "\n\t")])
+    _c("div", { attrs: { id: "svg-area" } })
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Upload.vue?vue&type=template&id=6c02d3ac&":
+/*!*********************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Upload.vue?vue&type=template&id=6c02d3ac& ***!
+  \*********************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c("h1", { staticClass: "text-4xl" }, [_vm._v("Upload")]),
+    _vm._v(" "),
+    _c("section", { attrs: { id: "content" } }, [
+      _c("input", {
+        staticClass: "btn btn-green",
+        attrs: { type: "file", id: "files", multiple: "" },
+        on: { change: _vm.handleFileSelect }
+      }),
+      _vm._v(" "),
+      _c("hr"),
+      _vm._v(" "),
+      _c("h2", [_vm._v("FileInfo")]),
+      _vm._v(" "),
+      _c("div", { attrs: { id: "file-info" } }),
+      _vm._v(" "),
+      _c("hr"),
+      _vm._v(" "),
+      _c("div", { staticClass: "h-64 w-auto overflow-scroll" }, [
+        _c("pre", {
+          staticClass: "text-4xl",
+          domProps: { innerHTML: _vm._s(_vm.table_data) }
+        })
+      ])
+    ])
   ])
 }
 var staticRenderFns = []
@@ -75389,6 +75420,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
 /* harmony import */ var _routes__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./routes */ "./resources/js/routes.js");
+/* harmony import */ var d3__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! d3 */ "./node_modules/d3/index.js");
+
 
 
 
@@ -75399,21 +75432,15 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_1___default.a({
   data: {
     csv_headers: null,
     data_set: false,
-    csv_data: null
+    csv_data: null,
+    main_data: null
+  },
+  created: function created() {
+    this.csv_data = d3__WEBPACK_IMPORTED_MODULE_4__["csv"]('csv/a.csv');
+    this.data_set = true;
   },
   router: new vue_router__WEBPACK_IMPORTED_MODULE_2__["default"](_routes__WEBPACK_IMPORTED_MODULE_3__["default"])
-}); // [
-// 			[2722, "2008-11-19", "2008-11-19", null, "Mumbai", 211, "vishalbhave", "2009-05-22 19:18:58 UTC", "2019-07-17 10:43:28 UTC", "research", "CC-BY-NC-SA", "http://www.inaturalist.org/observations/2722", "https://static.inaturalist.org/photos/3751/medium.jpg?1444937878", null, "Junonia orithya, Blue Pancy", null, 4, 0, false, null, "Khedshi, Ratnagiri", 17.0303096771, 73.3753967285, null, null, null, false, null, null, "Blue Argus", "Junonia orithya", "Blue Pansy", "Insecta", 51566, "Animalia", "Arthropoda", "Hexapoda", null, "Insecta", "Pterygota", null, "Lepidoptera", null, "Papilionoidea", "Nymphalidae", "Nymphalinae", null, "Junoniini", null, "Junonia", null, "Junonia orithya", null, null, null, null],
-// 			[2723, "2008-10-10", "2008-10-10", null, "Mumbai", 211, "vishalbhave", "2009-05-22 19:23:04 UTC", "2020-02-10 19:27:21 UTC", "research", "CC-BY-NC-SA", "http://www.inaturalist.org/observations/2723", "https://static.inaturalist.org/photos/3752/medium.jpg?1444937881", null, "Common Pierrot, Castalius rosimon", null, 4, 0, false, null, "Khedshi, ratnagiri", 17.0309047699, 73.3751525879, null, null, null, false, null, null, "common Pierrot", "Castalius rosimon", "Common Pierrot", "Insecta", 51567, "Animalia", "Arthropoda", "Hexapoda", null, "Insecta", "Pterygota", null, "Lepidoptera", null, "Papilionoidea", "Lycaenidae", "Polyommatinae", null, "Polyommatini", null, "Castalius", null, "Castalius rosimon", null, null, null, null],
-// 			[2724, "2008-11-10", "2008-11-10", null, "Mumbai", 211, "vishalbhave", "2009-05-22 19:29:09 UTC", "2019-08-08 19:27:08 UTC", "research", "CC-BY-NC-SA", "http://www.inaturalist.org/observations/2724", "https://static.inaturalist.org/photos/3753/medium.jpg?1444935393", null, "Red Pierrot, Talicada nyseus, India, Ratnagiri", "A mating pair and a single", 3, 0, false, null, "Maruti Mandir, Ratnagiri", 16.9884243011, 73.3145980835, null, null, null, false, null, null, "Red Pierrot", "Talicada nyseus", "Red Pierrot", "Insecta", 51569, "Animalia", "Arthropoda", "Hexapoda", null, "Insecta", "Pterygota", null, "Lepidoptera", null, "Papilionoidea", "Lycaenidae", "Polyommatinae", null, "Polyommatini", "Everina", "Talicada", null, "Talicada nyseus", null, null, null, null],
-// 			[2726, "July 18, 2006 12:57", "2006-07-18", "2006-07-18 07:27:00 UTC", "Mumbai", 211, "vishalbhave", "2009-05-25 21:24:19 UTC", "2017-12-11 17:17:26 UTC", "research", "CC-BY-NC-SA", "http://www.inaturalist.org/observations/2726", "https://static.inaturalist.org/photos/3762/medium.jpg?1444937887", null, null, null, 1, 0, false, null, "Maruti mandir, Ratnagiri", 16.9884605408, 73.3147201538, null, null, null, false, null, null, "Graphium doson", "Graphium doson", "Common Jay", "Insecta", 51576, "Animalia", "Arthropoda", "Hexapoda", null, "Insecta", "Pterygota", null, "Lepidoptera", null, "Papilionoidea", "Papilionidae", "Papilioninae", null, "Leptocircini", null, "Graphium", null, "Graphium doson", null, null, null, null],
-// 			[2727, "October 04, 2007 09:17", "2007-10-04", "2007-10-04 03:47:00 UTC", "Mumbai", 211, "vishalbhave", "2009-05-25 21:29:47 UTC", "2017-12-11 17:17:38 UTC", "research", "CC-BY-NC-SA", "http://www.inaturalist.org/observations/2727", "https://static.inaturalist.org/photos/3763/medium.jpg?1444937889", null, "Hypolimnas misippus, butterflies, India", "just for a record", 1, 0, false, null, "maruti mandir, Ratnagiri ", 16.9884605408, 73.314704895, null, null, null, false, null, null, "Hypolimnas misippus", "Hypolimnas misippus", "Danaid Eggfly", "Insecta", 51578, "Animalia", "Arthropoda", "Hexapoda", null, "Insecta", "Pterygota", null, "Lepidoptera", null, "Papilionoidea", "Nymphalidae", "Nymphalinae", null, "Junoniini", null, "Hypolimnas", null, "Hypolimnas misippus", null, null, null, null],
-// 			[2728, "August 13, 2006 13:37", "2006-08-13", "2006-08-13 08:07:00 UTC", "Mumbai", 211, "vishalbhave", "2009-05-25 21:32:11 UTC", "2017-12-11 17:17:49 UTC", "research", "CC-BY-NC-SA", "http://www.inaturalist.org/observations/2728", "https://static.inaturalist.org/photos/3764/medium.jpg?1444937892", null, "Blue Mormon, Papilio polymnestor, butterfly, India", null, 1, 0, false, null, "maruti mandir, ratnagiri", 16.9884052277, 73.3145751953, null, null, null, false, null, null, "Papilio polymnestor", "Papilio polymnestor", "Blue Mormon Swallowtail", "Insecta", 51580, "Animalia", "Arthropoda", "Hexapoda", null, "Insecta", "Pterygota", null, "Lepidoptera", null, "Papilionoidea", "Papilionidae", "Papilioninae", null, "Papilionini", null, "Papilio", null, "Papilio polymnestor", null, null, null, null],
-// 			[2729, "March 20, 2006 12:28", "2006-03-20", "2006-03-20 06:58:00 UTC", "Mumbai", 211, "vishalbhave", "2009-05-25 21:37:00 UTC", "2019-07-24 10:37:51 UTC", "research", "CC-BY-NC-SA", "http://www.inaturalist.org/observations/2729", "https://static.inaturalist.org/photos/3765/medium.jpg?1444937895", null, "Graphium agamemnon, Tailed Jay, butterfly, India", null, 2, 0, false, null, "Maruti mandir, Ratnagiri", 16.9884052277, 73.3145446777, null, null, null, false, null, null, "Tailed Jay", "Graphium agamemnon", "Tailed Jay", "Insecta", 51581, "Animalia", "Arthropoda", "Hexapoda", null, "Insecta", "Pterygota", null, "Lepidoptera", null, "Papilionoidea", "Papilionidae", "Papilioninae", null, "Leptocircini", null, "Graphium", null, "Graphium agamemnon", null, null, null, null],
-// 			[2730, "February 18, 2006 11:45", "2006-02-18", "2006-02-18 06:15:00 UTC", "Mumbai", 211, "vishalbhave", "2009-05-25 21:40:04 UTC", "2018-01-17 22:06:59 UTC", "research", "CC-BY-NC-SA", "http://www.inaturalist.org/observations/2730", "https://static.inaturalist.org/photos/3766/medium.jpg?1444937897", null, "butterfly, Crimson rose, India", null, 2, 0, false, null, "maruti mandir, ratnagiri", 16.9883995056, 73.3147277832, null, null, null, false, null, null, "Papilio polytes", "Papilio polytes", "Common Mormon Swallowtail", "Insecta", 51588, "Animalia", "Arthropoda", "Hexapoda", null, "Insecta", "Pterygota", null, "Lepidoptera", null, "Papilionoidea", "Papilionidae", "Papilioninae", null, "Papilionini", null, "Papilio", null, "Papilio polytes", null, null, null, null],
-// 			[2731, "October 04, 2007 09:13", "2007-10-04", "2007-10-04 03:43:00 UTC", "Mumbai", 211, "vishalbhave", "2009-05-25 21:45:44 UTC", "2019-07-16 17:38:57 UTC", "research", "CC-BY-NC-SA", "http://www.inaturalist.org/observations/2731", "https://static.inaturalist.org/photos/3767/medium.jpg?1444937900", null, "Papilio demoleus, Common Lime Butterfly, Lemon Butterfly, India, butterfly", null, 3, 0, false, null, "Shivaji stadium, Ratnagiri", 16.9884910583, 73.314704895, null, null, null, false, null, null, "Lime Swallowtail", "Papilio demoleus", "Lime Swallowtail", "Insecta", 51583, "Animalia", "Arthropoda", "Hexapoda", null, "Insecta", "Pterygota", null, "Lepidoptera", null, "Papilionoidea", "Papilionidae", "Papilioninae", null, "Papilionini", null, "Papilio", null, "Papilio demoleus", null, null, null, null],
-// 			[2732, "October 04, 2007 09:09", "2007-10-04", "2007-10-04 03:39:00 UTC", "Mumbai", 211, "vishalbhave", "2009-05-25 21:53:23 UTC", "2019-07-24 10:37:21 UTC", "research", "CC-BY-NC-SA", "http://www.inaturalist.org/observations/2732", "https://static.inaturalist.org/photos/3768/medium.jpg?1444937903", null, "Common Evening Brown, Melanitis leda, butterfly, India", null, 4, 0, false, null, "Shivaji stadium, ratnagiri", 16.9884147644, 73.3145828247, null, null, null, false, null, null, "Common Evening Brown", "Melanitis leda", "Common Evening Brown", "Insecta", 51584, "Animalia", "Arthropoda", "Hexapoda", null, "Insecta", "Pterygota", null, "Lepidoptera", null, "Papilionoidea", "Nymphalidae", "Satyrinae", null, "Melanitini", null, "Melanitis", null, "Melanitis leda", null, null, null, null]
-// 		]
+});
 
 /***/ }),
 
@@ -75798,6 +75825,75 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/Upload.vue":
+/*!********************************************!*\
+  !*** ./resources/js/components/Upload.vue ***!
+  \********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Upload_vue_vue_type_template_id_6c02d3ac___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Upload.vue?vue&type=template&id=6c02d3ac& */ "./resources/js/components/Upload.vue?vue&type=template&id=6c02d3ac&");
+/* harmony import */ var _Upload_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Upload.vue?vue&type=script&lang=js& */ "./resources/js/components/Upload.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _Upload_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Upload_vue_vue_type_template_id_6c02d3ac___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _Upload_vue_vue_type_template_id_6c02d3ac___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/Upload.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/Upload.vue?vue&type=script&lang=js&":
+/*!*********************************************************************!*\
+  !*** ./resources/js/components/Upload.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Upload_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./Upload.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Upload.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Upload_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/Upload.vue?vue&type=template&id=6c02d3ac&":
+/*!***************************************************************************!*\
+  !*** ./resources/js/components/Upload.vue?vue&type=template&id=6c02d3ac& ***!
+  \***************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Upload_vue_vue_type_template_id_6c02d3ac___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./Upload.vue?vue&type=template&id=6c02d3ac& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Upload.vue?vue&type=template&id=6c02d3ac&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Upload_vue_vue_type_template_id_6c02d3ac___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Upload_vue_vue_type_template_id_6c02d3ac___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/routes.js":
 /*!********************************!*\
   !*** ./resources/js/routes.js ***!
@@ -75812,15 +75908,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_Spatial__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/Spatial */ "./resources/js/components/Spatial.vue");
 /* harmony import */ var _components_Taxonomic__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/Taxonomic */ "./resources/js/components/Taxonomic.vue");
 /* harmony import */ var _components_NotFound__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/NotFound */ "./resources/js/components/NotFound.vue");
+/* harmony import */ var _components_Upload__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/Upload */ "./resources/js/components/Upload.vue");
 
 
 
 
 
-
-var Upload = function Upload() {
-  return Promise.all(/*! import() */[__webpack_require__.e(1), __webpack_require__.e(0)]).then(__webpack_require__.bind(null, /*! ./components/Upload */ "./resources/js/components/Upload.vue"));
-};
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   mode: 'history',
@@ -75833,7 +75926,7 @@ var Upload = function Upload() {
     component: _components_Home__WEBPACK_IMPORTED_MODULE_0__["default"]
   }, {
     path: '/upload',
-    component: Upload
+    component: _components_Upload__WEBPACK_IMPORTED_MODULE_5__["default"]
   }, {
     path: '/temporal',
     component: _components_Temporal__WEBPACK_IMPORTED_MODULE_1__["default"]

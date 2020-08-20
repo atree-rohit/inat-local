@@ -11,9 +11,6 @@
 
     <body class="font-sans">
         <div id="app">
-            <header class="p-2 mb-8">
-                <h1 class="text-6xl">iNaturalist Data Viewer</h1>
-            </header>
             <div class="container px-8 pb-32">
                 <main class="flex">
                     <aside class="w-1/6 pt-8">
