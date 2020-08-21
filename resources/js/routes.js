@@ -6,7 +6,7 @@ import NotFound from './components/NotFound';
 import Upload from './components/Upload';
 
 export default {
-	mode:'history',
+	mode:'hash',
 	linkActiveClass: 'font-bold',
 	routes: [
 		{

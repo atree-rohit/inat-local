@@ -17,11 +17,11 @@
                         <section class="mb-10">
                             <h5 class="text-base  uppercase font-bold mb-5">menu</h5>
                             <ul class="list-reset">
-                                <li class="text-sm leading-loose text-black"><router-link to="/" exact>Home</router-link></li>
-                                <li class="text-sm leading-loose text-black"><router-link to="/upload">Upload</router-link></li>
-                                <li class="text-sm leading-loose text-black" v-if="data_set"><router-link to="/temporal">Temporal</router-link></li>
-                                <li class="text-sm leading-loose text-black" v-if="data_set"><router-link to="/spatial">Spatial</router-link></li>
-                                <li class="text-sm leading-loose text-black" v-if="data_set"><router-link to="/taxonomic">Taxonomic</router-link></li>
+                                <li class="text-sm leading-loose text-black"><router-link to="./" exact>Home</router-link></li>
+                                <li class="text-sm leading-loose text-black"><router-link to="./upload">Upload</router-link></li>
+                                <li class="text-sm leading-loose text-black" v-if="data_set"><router-link to="./temporal">Temporal</router-link></li>
+                                <li class="text-sm leading-loose text-black" v-if="data_set"><router-link to="./spatial">Spatial</router-link></li>
+                                <li class="text-sm leading-loose text-black" v-if="data_set"><router-link to="./taxonomic">Taxonomic</router-link></li>
                             </ul>
                         </section>
                     </aside>

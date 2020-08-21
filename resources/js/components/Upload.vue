@@ -4,7 +4,7 @@
 
 		<section id="content">
 
-			<input type="file" id="files" multiple @change="handleFileSelect" class="btn btn-green" />
+			<input type="file" id="files" multiple @change="this.$root.handleFileSelect" class="btn btn-green" />
 			<hr />
 			<h2>FileInfo</h2>
 			<div id="file-info"></div>
@@ -29,8 +29,8 @@ export default{
 	},
 	methods: {
 		handleFileSelect: function(e) {
-			this.reader.addEventListener("load", this.parseFile, false);
-			this.reader.readAsText(e.target.files[0]);
+			this.$root.reader.addEventListener("load", this.parseFile, false);
+			this.$root.reader.readAsText(e.target.files[0]);
 		},
 
 		parseFile : function(){
