@@ -12,7 +12,7 @@
 	}
 	.continent {
 	    /*fill: #f0e4dd;*/
-	    stroke: #a85;
+	    /*stroke: #a85;*/
 	    stroke-width: .5;
 	}
 
@@ -32,31 +32,12 @@
 	<div>
 		<h1 class="text-4xl">Spatial</h1>
 		<div id="map-container" class="svg-container"></div>
-		<table class="table">
-			<thead>
-				<tr>
-					<th>City</th>
-					<th>Latitude</th>
-					<th>Longitude</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr v-for="coordinate in coordinates">
-					<td>{{ coordinate.City }}</td>
-					<td>{{ coordinate.Latitude }}</td>
-					<td>{{ coordinate.Longitude }}</td>
-				</tr>
-			</tbody>
-		</table>
-
-
 	</div>
 
 </template>
 
 <script>
 import * as d3 from 'd3';
-// import { in_state } from '../in_state.js';
 	export default{
 		data(){
 			return{
@@ -70,16 +51,19 @@ import * as d3 from 'd3';
 				const data = this.$root.csv_data
 					data.forEach((d) => {
 						var duplicate_flag = false;
-						this.coordinates.forEach((du) => {
-							if(du.Latitude.toFixed(decimal_precision) == parseFloat(d.Latitude).toFixed(decimal_precision) && du.Longitude.toFixed(decimal_precision) == parseFloat(d.Longitude).toFixed(decimal_precision))
+						this.coordinates.forEach((du,i) => {
+							if(du.latitude.toFixed(decimal_precision) == parseFloat(d.latitude).toFixed(decimal_precision) && du.longitude.toFixed(decimal_precision) == parseFloat(d.longitude).toFixed(decimal_precision)){
 								duplicate_flag = true;
+								this.coordinates[i].pointCount++;
+							}
 						});
-						if(!duplicate_flag && !isNaN(parseFloat(d.Longitude))){
+						if(!duplicate_flag && !isNaN(parseFloat(d.longitude))){
 							this.coordinates.push(
 							{
-								"City": d.City,
-								"Longitude": parseFloat(d.Longitude),
-								"Latitude": parseFloat(d.Latitude)
+								"place_guess": d.place_guess,
+								"longitude": parseFloat(d.longitude),
+								"latitude": parseFloat(d.latitude),
+								"pointCount": 1
 							});
 						}
 					});
@@ -96,37 +80,39 @@ import * as d3 from 'd3';
 			var projection = d3.geoMercator().translate([w/2, h/2]).scale(1000).center([80,23.5]);
 			var path = d3.geoPath().projection(projection);
 			var worldmap = this.$root.in_states;
-			var cities = this.spatialData();
+			var places = this.spatialData();
 			var g = svg.append("g");
 
-			console.log(worldmap);
+			console.log(places);
+			
 
-			Promise.all([worldmap, cities]).then(function(values){
+			Promise.all([worldmap, places]).then(function(values){
 			    g.selectAll("path")
 			        .data(values[0].features)
 			        .enter()
 			        .append("path")
-			        .attr("class","continent")
-			        .attr("fill","none")
-			        .attr("stroke","black")
-			        .attr("d", path),
+				        .attr("class","continent")
+				        .attr("fill","none")
+				        .attr("stroke","green")
+				        .attr("d", path),
 
 			    g.selectAll("circle")
 			        .data(values[1])
 			        .enter()
 			        .append("circle")
-			        .attr("class","circles")
-			        .attr("cx", function(d) {return projection([d.Longitude, d.Latitude])[0];})
-			        .attr("cy", function(d) {return projection([d.Longitude, d.Latitude])[1];})
-			        .attr("r", 2)
-			        .on("mousemove", function(d){
-			 		tooltip
-				 		.style("left", d3.event.pageX + 20 + "px")
-				 		.style("top", d3.event.pageY + 20 + "px")
-				 		.style("display", "inline-block")
-				 		.html(d.City);
-        			})
-    			.on("mouseout", function(d){ tooltip.style("display", "none");});
+				        .attr("class","circles")
+				        .attr("cx", (d) => projection([d.longitude, d.latitude])[0])
+				        .attr("cy", (d) => projection([d.longitude, d.latitude])[1])
+				        // .attr("r", (d) => d.pointCount*0.5 + "px")
+				        .attr("r", 2)
+				        .on("mousemove", function(d){
+					 		tooltip
+						 		.style("left", d3.event.pageX + 20 + "px")
+						 		.style("top", d3.event.pageY + 20 + "px")
+						 		.style("display", "inline-block")
+						 		.html(`${d.place_guess}<br>${d.pointCount} Observations`);
+		        			})
+		    			.on("mouseout", function(d){ tooltip.style("display", "none");});
 			});
 
 			var zoom = d3.zoom()

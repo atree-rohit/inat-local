@@ -29,9 +29,11 @@ let app = new Vue ({
 				const x = {
 					"id": +d.id,
 					"observed_on": new Date(d.observed_on),
-					"City": d.place_guess,
-					"Latitude": +d.latitude,
-					"Longitude": +d.longitude,
+					"created_at": new Date(d.created_at),
+					"updated_at": new Date(d.updated_at),
+					"place_guess": d.place_guess,
+					"latitude": +d.latitude,
+					"longitude": +d.longitude,
 				};
 				op.push(x);
 			});

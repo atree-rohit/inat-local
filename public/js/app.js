@@ -1985,25 +1985,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
- // import { in_state } from '../in_state.js';
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -2020,15 +2001,19 @@ __webpack_require__.r(__webpack_exports__);
       data.forEach(function (d) {
         var duplicate_flag = false;
 
-        _this.coordinates.forEach(function (du) {
-          if (du.Latitude.toFixed(decimal_precision) == parseFloat(d.Latitude).toFixed(decimal_precision) && du.Longitude.toFixed(decimal_precision) == parseFloat(d.Longitude).toFixed(decimal_precision)) duplicate_flag = true;
+        _this.coordinates.forEach(function (du, i) {
+          if (du.latitude.toFixed(decimal_precision) == parseFloat(d.latitude).toFixed(decimal_precision) && du.longitude.toFixed(decimal_precision) == parseFloat(d.longitude).toFixed(decimal_precision)) {
+            duplicate_flag = true;
+            _this.coordinates[i].pointCount++;
+          }
         });
 
-        if (!duplicate_flag && !isNaN(parseFloat(d.Longitude))) {
+        if (!duplicate_flag && !isNaN(parseFloat(d.longitude))) {
           _this.coordinates.push({
-            "City": d.City,
-            "Longitude": parseFloat(d.Longitude),
-            "Latitude": parseFloat(d.Latitude)
+            "place_guess": d.place_guess,
+            "longitude": parseFloat(d.longitude),
+            "latitude": parseFloat(d.latitude),
+            "pointCount": 1
           });
         }
       });
@@ -2043,16 +2028,17 @@ __webpack_require__.r(__webpack_exports__);
     var projection = d3__WEBPACK_IMPORTED_MODULE_0__["geoMercator"]().translate([w / 2, h / 2]).scale(1000).center([80, 23.5]);
     var path = d3__WEBPACK_IMPORTED_MODULE_0__["geoPath"]().projection(projection);
     var worldmap = this.$root.in_states;
-    var cities = this.spatialData();
+    var places = this.spatialData();
     var g = svg.append("g");
-    console.log(worldmap);
-    Promise.all([worldmap, cities]).then(function (values) {
-      g.selectAll("path").data(values[0].features).enter().append("path").attr("class", "continent").attr("fill", "none").attr("stroke", "black").attr("d", path), g.selectAll("circle").data(values[1]).enter().append("circle").attr("class", "circles").attr("cx", function (d) {
-        return projection([d.Longitude, d.Latitude])[0];
+    console.log(places);
+    Promise.all([worldmap, places]).then(function (values) {
+      g.selectAll("path").data(values[0].features).enter().append("path").attr("class", "continent").attr("fill", "none").attr("stroke", "green").attr("d", path), g.selectAll("circle").data(values[1]).enter().append("circle").attr("class", "circles").attr("cx", function (d) {
+        return projection([d.longitude, d.latitude])[0];
       }).attr("cy", function (d) {
-        return projection([d.Longitude, d.Latitude])[1];
-      }).attr("r", 2).on("mousemove", function (d) {
-        tooltip.style("left", d3__WEBPACK_IMPORTED_MODULE_0__["event"].pageX + 20 + "px").style("top", d3__WEBPACK_IMPORTED_MODULE_0__["event"].pageY + 20 + "px").style("display", "inline-block").html(d.City);
+        return projection([d.longitude, d.latitude])[1];
+      }) // .attr("r", (d) => d.pointCount*0.5 + "px")
+      .attr("r", 2).on("mousemove", function (d) {
+        tooltip.style("left", d3__WEBPACK_IMPORTED_MODULE_0__["event"].pageX + 20 + "px").style("top", d3__WEBPACK_IMPORTED_MODULE_0__["event"].pageY + 20 + "px").style("display", "inline-block").html("".concat(d.place_guess, "<br>").concat(d.pointCount, " Observations"));
       }).on("mouseout", function (d) {
         tooltip.style("display", "none");
       });
@@ -2258,7 +2244,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".toolTip {\n  position: absolute;\n  display: none;\n  height: auto;\n  background: none repeat scroll 0 0 #ccc;\n  border: 1px solid #999;\n  padding: 4px;\n  font-size:.7em;\n  text-align: center;\n  border-radius:5px;\n}\n.continent {\n  /*fill: #f0e4dd;*/\n  stroke: #a85;\n  stroke-width: .5;\n}\n.circles {\n  fill: red;\n  opacity: .5;\n}\n.labels {\n  font-family: sans-serif;\n  font-size: 11px;\n  fill: #444444;\n}\n", ""]);
+exports.push([module.i, ".toolTip {\n  position: absolute;\n  display: none;\n  height: auto;\n  background: none repeat scroll 0 0 #ccc;\n  border: 1px solid #999;\n  padding: 4px;\n  font-size:.7em;\n  text-align: center;\n  border-radius:5px;\n}\n.continent {\n  /*fill: #f0e4dd;*/\n  /*stroke: #a85;*/\n  stroke-width: .5;\n}\n.circles {\n  fill: red;\n  opacity: .5;\n}\n.labels {\n  font-family: sans-serif;\n  font-size: 11px;\n  fill: #444444;\n}\n", ""]);
 
 // exports
 
@@ -60869,43 +60855,20 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _c("h1", { staticClass: "text-4xl" }, [_vm._v("Spatial")]),
-    _vm._v(" "),
-    _c("div", { staticClass: "svg-container", attrs: { id: "map-container" } }),
-    _vm._v(" "),
-    _c("table", { staticClass: "table" }, [
-      _vm._m(0),
-      _vm._v(" "),
-      _c(
-        "tbody",
-        _vm._l(_vm.coordinates, function(coordinate) {
-          return _c("tr", [
-            _c("td", [_vm._v(_vm._s(coordinate.City))]),
-            _vm._v(" "),
-            _c("td", [_vm._v(_vm._s(coordinate.Latitude))]),
-            _vm._v(" "),
-            _c("td", [_vm._v(_vm._s(coordinate.Longitude))])
-          ])
-        }),
-        0
-      )
-    ])
-  ])
+  return _vm._m(0)
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("thead", [
-      _c("tr", [
-        _c("th", [_vm._v("City")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Latitude")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Longitude")])
-      ])
+    return _c("div", [
+      _c("h1", { staticClass: "text-4xl" }, [_vm._v("Spatial")]),
+      _vm._v(" "),
+      _c("div", {
+        staticClass: "svg-container",
+        attrs: { id: "map-container" }
+      })
     ])
   }
 ]
@@ -76305,9 +76268,11 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_1___default.a({
         var x = {
           "id": +d.id,
           "observed_on": new Date(d.observed_on),
-          "City": d.place_guess,
-          "Latitude": +d.latitude,
-          "Longitude": +d.longitude
+          "created_at": new Date(d.created_at),
+          "updated_at": new Date(d.updated_at),
+          "place_guess": d.place_guess,
+          "latitude": +d.latitude,
+          "longitude": +d.longitude
         };
         op.push(x);
       });
