@@ -3,6 +3,7 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import routes from './routes';
 import * as d3 from 'd3';
+import { in_states } from './in_state.js';
 
 Vue.use(VueRouter);
 
@@ -14,6 +15,7 @@ let app = new Vue ({
 		data_set: false,
 		csv_data: null,
 		main_data: null,
+		in_states: in_states
 		},
 	methods: {
 		handleFileSelect: function(e) {

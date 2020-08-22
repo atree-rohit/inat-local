@@ -95,7 +95,7 @@ import * as d3 from 'd3';
 				.classed("svg-content", true);
 			var projection = d3.geoMercator().translate([w/2, h/2]).scale(1000).center([80,23.5]);
 			var path = d3.geoPath().projection(projection);
-			var worldmap = d3.json('in_states.geojson');
+			var worldmap = this.$root.in_states;
 			var cities = this.spatialData();
 			var g = svg.append("g");
 
