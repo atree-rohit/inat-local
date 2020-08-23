@@ -13,7 +13,7 @@ let app = new Vue ({
 		reader: new FileReader(),
 		csv_headers: null,
 		data_set: false,
-		csv_data: null,
+		csv_data: [],
 		main_data: null,
 		in_states: in_states
 		},

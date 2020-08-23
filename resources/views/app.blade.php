@@ -7,6 +7,7 @@
         <title>iNaturalist Data Visualizer</title>
         <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
         <link rel="stylesheet" type="text/css" href="/css/app.css">
+        <script src="https://d3js.org/d3.v5.min.js"></script>
     </head>
 
     <body class="font-sans">

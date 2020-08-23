@@ -18,6 +18,13 @@
 <template>
 	<div>
 		<h1 class="text-4xl">Temporal</h1>
+		<select v-model="col" @change="render()">
+			<option disabled value="">Please select one</option>
+			<option>observed_on</option>
+			<option>created_at</option>
+			<option>updated_at</option>
+		</select>
+		<span>Selected: {{ col }}</span>
 		<div id="svg-area"></div>
 	</div>
 </template>
@@ -27,46 +34,67 @@ import * as d3 from 'd3';
 export default{
 	data() {
 		return {
-			xxx: null,
+			col: 'observed_on',
+			data: this.$root.csv_data,
+			margin: {top: 10, right: 30, bottom: 30, left: 40},
 		}
 	},
 
 	methods: {
+		data_prepare(){
+			const data = this.data;
+			const col = this.col;
+			let op = [];
+			data.forEach(d => {
+				if(d[col].getFullYear() > 189){
+					op.push({
+						"id": d["id"],
+						"date": d[col]
+					});
+
+				}
+			});
+			return op;
+
+		},
 		render(){
-			const data = this.$root.csv_data;
-			const margin = {top: 10, right: 30, bottom: 30, left: 40};
+			const data = this.data_prepare();
+			const margin = this.margin;
 			const width = 960 - margin.left - margin.right;
 			const height = 500 - margin.top - margin.bottom;
+			const selected_col = this.col;
 
 			const tooltip = d3.select("body").append("div").attr("class", "toolTip");
 			const tooltip_date = (date) => {
 				const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec' ];
 				return months[date.getMonth()] + ", " + date.getFullYear();
 			}
-
-			const xValue = (d) => new Date(d.observed_on);
+			
+			const xValue = (d) => d.date;
 			const xAxisLabel = "Time";
 			const yValue = (d) => d.id;
 			const yAxisLabel = "Observations";
 			const title = `${yAxisLabel} vs. ${xAxisLabel}`;
 			const circleRadius = 15;
-
-
+			
 			const xScale = d3.scaleTime()
-				.domain([d3.min(data, xValue), d3.max(data, xValue)])
+				.domain(d3.extent(data, xValue))
 				.range([0, width])
 				.nice();
-			console.log(xValue(data[0]));
-
+			console.log(xScale.domain());
 			const yScale = d3.scaleLinear()
 				.range([height, 0])
 				.nice();
 
 			const histogram = d3.histogram()
-				.value(function(d){ return d.observed_on; })
+				.value(xValue)
 				.domain(xScale.domain())
 				.thresholds(xScale.ticks(d3.timeMonth));
 
+			if(!d3.select("#svg-area svg").empty()){
+				d3.selectAll("svg").remove();
+			}
+			
 			var svg = d3.select("#svg-area").append("svg")
 					.attr("width", width + margin.left + margin.right)
 					.attr("height", height + margin.top + margin.bottom)
@@ -78,36 +106,42 @@ export default{
 			 yScale.domain([0, d3.max(bins, function(d) { return d.length; })]);
 
 			 const chart = svg.selectAll("rect").data(bins);
-			 chart.enter().append("rect")
-			 	.attr("class", "bar")
-			 	.attr("x", 1)
-			 	.attr("transform", function(d) {
-			 		return `translate(${xScale(d.x0)}, ${yScale(d.length)} )`; })
-			 	.attr("width", function(d) { return xScale(d.x1) - xScale(d.x0) ; })
-			 	.attr("height", function(d) { return height - yScale(d.length); })
-			 	.on("mousemove", function(d){
-			 		tooltip
-				 		.style("left", d3.event.pageX + 20 + "px")
-				 		.style("top", d3.event.pageY + 20 + "px")
-				 		.style("display", "inline-block")
-				 		.html(tooltip_date(d.x1) + "<br>" + d.length + " observations");
-        			})
-    			.on("mouseout", function(d){ tooltip.style("display", "none");});
 
-		  // add the x Axis
-		  svg.append("g")
-		      .attr("transform", "translate(0," + height + ")")
-		      .call(d3.axisBottom(xScale));
+			if(this.$root.data_set){
+				chart.enter().append("rect")
+				 	.attr("class", "bar")
+				 	.attr("x", 1)
+				 	.attr("transform", (d) => `translate(${xScale(d.x0)}, ${yScale(d.length)} )`)
+				 	.attr("width", (d) => xScale(d.x1) - xScale(d.x0))
+				 	.attr("height", (d) => height - yScale(d.length))
+				 	.on("mousemove", (d) => {
+				 		tooltip
+					 		.style("left", d3.event.pageX + 20 + "px")
+					 		.style("top", d3.event.pageY + 20 + "px")
+					 		.style("display", "inline-block")
+					 		.html(tooltip_date(d.x1) + "<br>" + d.length + " observations");
+	        			})
+	    			.on("mouseout", function(d){ tooltip.style("display", "none");});
 
-		  // add the y Axis
-		  svg.append("g")
-		      .call(d3.axisLeft(yScale));
+			  // add the x Axis
+			  svg.append("g")
+			      .attr("transform", "translate(0," + height + ")")
+			      .call(d3.axisBottom(xScale));
 
-			svg.append('text')
-			.attr('class', 'title')
-			.attr('y', -10)
-			.text(title)
-		}
+			  // add the y Axis
+			  svg.append("g")
+			      .call(d3.axisLeft(yScale));
+
+				svg.append('text')
+				.attr('class', 'title')
+				.attr('y', -10)
+				.text(title)
+
+			}
+		},
+		render_created(){
+
+		},
 	},
 	mounted: function(){
 		this.render();
