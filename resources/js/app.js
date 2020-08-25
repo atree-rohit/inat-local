@@ -1,11 +1,14 @@
 import './bootstrap.js';
 import Vue from 'vue';
+import VueOnsen from 'vue-onsenui';
 import VueRouter from 'vue-router';
 import routes from './routes';
 import * as d3 from 'd3';
 import { in_states } from './in_state.js';
 
 Vue.use(VueRouter);
+Vue.use(VueOnsen);
+
 
 let app = new Vue ({
 	el: '#app',

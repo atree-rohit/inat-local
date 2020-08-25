@@ -6,38 +6,29 @@
 
         <title>iNaturalist Data Visualizer</title>
         <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
-        <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
-        <script src="https://d3js.org/d3.v5.min.js"></script>
-        <style type="text/css">
-            .btn-info{
-                color:white !important;
-            }
-            .router-link-exact-active{
-                background-color: lightblue !important;
-                color:steelblue !important;
-
-            }
-        </style>
+        <link rel="stylesheet" type="text/css" href="/css/app.css">
     </head>
 
-    <body class="bg-dark">
+    <body class="font-sans">
         <div id="app">
-            <div class="container mt-2">
-                <div class="row">
-                    <div class="btn-group mx-auto">
-                        <router-link class="btn btn-lg btn-outline-info" to="./" exact>Home</router-link>
-                        <router-link class="btn btn-lg btn-outline-info" to="./upload">Upload</router-link>
-                        <router-link class="btn btn-lg btn-outline-info on-data-set" to="./users">Users</router-link>
-                        <router-link class="btn btn-lg btn-outline-info on-data-set" to="./temporal">Temporal</router-link>
-                        <router-link class="btn btn-lg btn-outline-info on-data-set" to="./spatial">Spatial</router-link>
-                        <router-link class="btn btn-lg btn-outline-info on-data-set" to="./taxonomic">Taxonomic</router-link>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col bg-light">
+            <div class="container px-8 pb-32">
+                <main class="flex">
+                    <aside class="w-1/6 pt-8">
+                        <section class="mb-10">
+                            <h5 class="text-base  uppercase font-bold mb-5">menu</h5>
+                            <ul class="list-reset">
+                                <li class="text-sm leading-loose text-black"><router-link to="./" exact>Home</router-link></li>
+                                <li class="text-sm leading-loose text-black"><router-link to="./upload">Upload</router-link></li>
+                                <li class="text-sm leading-loose text-black" v-if="data_set"><router-link to="./temporal">Temporal</router-link></li>
+                                <li class="text-sm leading-loose text-black" v-if="data_set"><router-link to="./spatial">Spatial</router-link></li>
+                                <li class="text-sm leading-loose text-black" v-if="data_set"><router-link to="./taxonomic">Taxonomic</router-link></li>
+                            </ul>
+                        </section>
+                    </aside>
+                    <div class="w-5/6 primary flex-1">
                         <router-view></router-view>
                     </div>
-                </div>
+                </main>
 
             </div>
 
