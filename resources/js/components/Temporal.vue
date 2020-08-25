@@ -147,6 +147,9 @@ export default{
 		},
 	},
 	mounted: function(){
+		if(!this.$root.data_set)
+			this.$router.push('/')
+
 		this.render();
 	}
 };

@@ -20,7 +20,7 @@
         </style>
     </head>
 
-    <body class="font-sans">
+    <body class="bg-dark">
         <div id="app">
             <div class="container mt-2">
                 <div class="row">
@@ -34,7 +34,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col">
+                    <div class="col bg-light">
                         <router-view></router-view>
                     </div>
                 </div>

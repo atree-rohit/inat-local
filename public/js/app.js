@@ -2219,6 +2219,7 @@ __webpack_require__.r(__webpack_exports__);
     render_created: function render_created() {}
   },
   mounted: function mounted() {
+    if (!this.$root.data_set) this.$router.push('/');
     this.render();
   }
 });
@@ -76505,23 +76506,22 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_1___default.a({
       this.enable_buttons();
     },
     enable_buttons: function enable_buttons() {
-      if (this.data_set) {
-        var elements = document.querySelectorAll(".on-data-set");
+      var elements = document.querySelectorAll(".on-data-set");
+      console.log("x");
 
+      if (this.data_set) {
         for (var i = 0; i < elements.length; i++) {
           elements[i].setAttribute("class", "btn btn-lg btn-info on-data-set");
+        }
+      } else {
+        for (var i = 0; i < elements.length; i++) {
+          elements[i].setAttribute("class", "btn btn-lg btn-danger disabled on-data-set");
         }
       }
     }
   },
   mounted: function mounted() {
-    if (!this.data_set) {
-      var elements = document.querySelectorAll(".on-data-set");
-
-      for (var i = 0; i < elements.length; i++) {
-        elements[i].setAttribute("class", "btn btn-lg btn-danger disabled on-data-set");
-      }
-    }
+    this.enable_buttons();
   },
   router: new vue_router__WEBPACK_IMPORTED_MODULE_2__["default"](_routes__WEBPACK_IMPORTED_MODULE_3__["default"])
 });

@@ -43,23 +43,23 @@ let app = new Vue ({
 			this.enable_buttons();
 		},
 		enable_buttons: function (){
-			if(this.data_set){
 			const elements = document.querySelectorAll(".on-data-set");
-			for (var i=0; i < elements.length; i++) {
-				elements[i].setAttribute("class", "btn btn-lg btn-info on-data-set");
+			console.log("x");
+			if(this.data_set){
+				for (var i=0; i < elements.length; i++) {
+					elements[i].setAttribute("class", "btn btn-lg btn-info on-data-set");
+				}
 			}
-		}
-
+			else {
+				for (var i=0; i < elements.length; i++) {
+					elements[i].setAttribute("class", "btn btn-lg btn-danger disabled on-data-set");
+				}
+			}
 		},
 
 	},
 	mounted() {
-		if(!this.data_set){
-			const elements = document.querySelectorAll(".on-data-set");
-			for (var i=0; i < elements.length; i++) {
-				elements[i].setAttribute("class", "btn btn-lg btn-danger disabled on-data-set");
-			}
-		}
+		this.enable_buttons();
 	},
 
 	router: new VueRouter(routes)
