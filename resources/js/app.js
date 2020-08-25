@@ -28,6 +28,7 @@ let app = new Vue ({
 			d3.csvParse(this.reader.result).forEach((d) => {
 				const x = {
 					"id": +d.id,
+					"user": d.user_login,
 					"observed_on": new Date(d.observed_on),
 					"created_at": new Date(d.created_at),
 					"updated_at": new Date(d.updated_at),

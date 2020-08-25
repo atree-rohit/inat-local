@@ -4,6 +4,7 @@ import Spatial from './components/Spatial';
 import Taxonomic from './components/Taxonomic';
 import NotFound from './components/NotFound';
 import Upload from './components/Upload';
+import Users from './components/Users';
 
 export default {
 	mode:'hash',
@@ -21,6 +22,9 @@ export default {
 		}, {
 			path: '/temporal',
 			component: Temporal
+		}, {
+			path: '/users',
+			component: Users
 		}, {
 			path: '/spatial',
 			component: Spatial

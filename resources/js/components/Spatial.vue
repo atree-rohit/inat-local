@@ -17,8 +17,8 @@
 	}
 
 	.circles {
-	    fill: pink;
-	    opacity: .65;
+	    fill: red;
+	    opacity: .75;
 	}
 
 	.labels {
@@ -83,7 +83,7 @@ import * as d3 from 'd3';
 				var g = svg.append("g");
 
 				// console.log(places);
-				
+
 
 				Promise.all([worldmap, places]).then(function(values){
 				    const india = g.selectAll("path")
@@ -95,7 +95,7 @@ import * as d3 from 'd3';
 				        .append("path")
 					        .attr("class","state")
 					        .attr("d", path);
-					
+
 
 				    g.selectAll("circle")
 				        .data(values[1])
@@ -104,7 +104,7 @@ import * as d3 from 'd3';
 					        .attr("class","circles")
 					        .attr("cx", (d) => projection([d.longitude, d.latitude])[0])
 					        .attr("cy", (d) => projection([d.longitude, d.latitude])[1])
-					        .attr("r", (d) => (1 + d.pointCount*0.01))
+					        .attr("r", (d) => (Math.log(d.pointCount)))
 					        // .attr("r", 2 + )
 					        .on("mousemove", function(d){
 						 		tooltip
