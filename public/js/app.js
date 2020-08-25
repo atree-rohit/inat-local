@@ -76511,11 +76511,11 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_1___default.a({
 
       if (this.data_set) {
         for (var i = 0; i < elements.length; i++) {
-          elements[i].setAttribute("class", "btn btn-lg btn-info on-data-set");
+          elements[i].setAttribute("class", "btn btn-lg btn-outline-info on-data-set");
         }
       } else {
         for (var i = 0; i < elements.length; i++) {
-          elements[i].setAttribute("class", "btn btn-lg btn-danger disabled on-data-set");
+          elements[i].setAttribute("class", "btn btn-lg btn-outline-danger disabled on-data-set");
         }
       }
     }

@@ -25,12 +25,12 @@
             <div class="container mt-2">
                 <div class="row">
                     <div class="btn-group mx-auto">
-                        <router-link class="btn btn-lg btn-info" to="./" exact>Home</router-link>
-                        <router-link class="btn btn-lg btn-info" to="./upload">Upload</router-link>
-                        <router-link class="btn btn-lg btn-info on-data-set" to="./users">Users</router-link>
-                        <router-link class="btn btn-lg btn-info on-data-set" to="./temporal">Temporal</router-link>
-                        <router-link class="btn btn-lg btn-info on-data-set" to="./spatial">Spatial</router-link>
-                        <router-link class="btn btn-lg btn-info on-data-set" to="./taxonomic">Taxonomic</router-link>
+                        <router-link class="btn btn-lg btn-outline-info" to="./" exact>Home</router-link>
+                        <router-link class="btn btn-lg btn-outline-info" to="./upload">Upload</router-link>
+                        <router-link class="btn btn-lg btn-outline-info on-data-set" to="./users">Users</router-link>
+                        <router-link class="btn btn-lg btn-outline-info on-data-set" to="./temporal">Temporal</router-link>
+                        <router-link class="btn btn-lg btn-outline-info on-data-set" to="./spatial">Spatial</router-link>
+                        <router-link class="btn btn-lg btn-outline-info on-data-set" to="./taxonomic">Taxonomic</router-link>
                     </div>
                 </div>
                 <div class="row">
