@@ -10,6 +10,9 @@
 		text-align: center;
 		border-radius:5px;
 	}
+	.bar{
+		fill: steelblue;
+	}
 	.bar:hover{
 		fill:red;
 	}
@@ -69,14 +72,14 @@ export default{
 				const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec' ];
 				return months[date.getMonth()] + ", " + date.getFullYear();
 			}
-			
+
 			const xValue = (d) => d.date;
 			const xAxisLabel = "Time";
 			const yValue = (d) => d.id;
 			const yAxisLabel = "Observations";
 			const title = `${yAxisLabel} vs. ${xAxisLabel}`;
 			const circleRadius = 15;
-			
+
 			const xScale = d3.scaleTime()
 				.domain(d3.extent(data, xValue))
 				.range([0, width])
@@ -94,7 +97,7 @@ export default{
 			if(!d3.select("#svg-area svg").empty()){
 				d3.selectAll("svg").remove();
 			}
-			
+
 			var svg = d3.select("#svg-area").append("svg")
 					.attr("width", width + margin.left + margin.right)
 					.attr("height", height + margin.top + margin.bottom)

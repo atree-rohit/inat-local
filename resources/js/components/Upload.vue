@@ -1,18 +1,9 @@
 <template>
-	<div>
+	<div class="text-center mt-3">
 		<h1 class="text-4xl">Upload</h1>
-
 		<section id="content">
-
-			<input type="file" id="files" multiple @change="this.$root.handleFileSelect" class="btn btn-green" />
-			<hr />
-			<h2>FileInfo</h2>
+			<input type="file" id="files" multiple @change="this.$root.handleFileSelect" class="btn btn-success" />
 			<div id="file-info"></div>
-			<hr />
-			<!-- <button @click="populateTable" class="btn btn-blue">View Data</button> -->
-			<div class="h-64 w-auto overflow-scroll">
-				<pre v-html="table_data" class="text-4xl"></pre>
-			</div>
 		</section>
 
 	</div>
@@ -28,12 +19,12 @@ export default{
 		}
 	},
 	methods: {
-		handleFileSelect: function(e) {
+		ahandleFileSelect: function(e) {
 			this.$root.reader.addEventListener("load", this.parseFile, false);
 			this.$root.reader.readAsText(e.target.files[0]);
 		},
 
-		parseFile : function(){
+		aparseFile : function(){
 			this.$root.csv_data = d3.csv(this.reader.result);
 			this.$root.data_set = true;
 		}

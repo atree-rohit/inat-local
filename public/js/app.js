@@ -2123,6 +2123,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -2243,15 +2246,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -2261,11 +2255,11 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
-    handleFileSelect: function handleFileSelect(e) {
+    ahandleFileSelect: function ahandleFileSelect(e) {
       this.$root.reader.addEventListener("load", this.parseFile, false);
       this.$root.reader.readAsText(e.target.files[0]);
     },
-    parseFile: function parseFile() {
+    aparseFile: function aparseFile() {
       this.$root.csv_data = d3__WEBPACK_IMPORTED_MODULE_0__["csv"](this.reader.result);
       this.$root.data_set = true;
     }
@@ -2411,7 +2405,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".toolTip {\n  position: absolute;\n  display: none;\n  height: auto;\n  background: none repeat scroll 0 0 #ccc;\n  border: 1px solid #999;\n  padding: 4px;\n  font-size:.7em;\n  text-align: center;\n  border-radius:5px;\n}\n.state {\n  fill: none;\n  stroke: #000;\n  stroke-width: .5;\n}\n.circles {\n  fill: red;\n  opacity: .75;\n}\n.labels {\n  font-family: sans-serif;\n  font-size: 11px;\n  fill: #444444;\n}\n", ""]);
+exports.push([module.i, "\n.toolTip {\n\tposition: absolute;\n\tdisplay: none;\n\theight: auto;\n\tbackground: none repeat scroll 0 0 #ccc;\n\tborder: 1px solid #999;\n\tpadding: 4px;\n\tfont-size:.7em;\n\ttext-align: center;\n\tborder-radius:5px;\n}\n.state {\n    fill: none;\n    stroke: #000;\n    stroke-width: .5;\n}\n.circles {\n    fill: red;\n    opacity: .75;\n}\n.labels {\n    font-family: sans-serif;\n    font-size: 11px;\n    fill: #444444;\n}\n", ""]);
 
 // exports
 
@@ -2430,7 +2424,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".toolTip {\n  position: absolute;\n  display: none;\n  height: auto;\n  background: none repeat scroll 0 0 #ccc;\n  border: 1px solid #999;\n  padding: 4px;\n  font-size:.7em;\n  text-align: center;\n  border-radius:5px;\n}\n.bar:hover{\n  fill:red;\n}\n\n", ""]);
+exports.push([module.i, "\n.toolTip {\n\tposition: absolute;\n\tdisplay: none;\n\theight: auto;\n\tbackground: none repeat scroll 0 0 #ccc;\n\tborder: 1px solid #999;\n\tpadding: 4px;\n\tfont-size:.7em;\n\ttext-align: center;\n\tborder-radius:5px;\n}\n.bar{\n\tfill: steelblue;\n}\n.bar:hover{\n\tfill:red;\n}\n\n", ""]);
 
 // exports
 
@@ -61168,30 +61162,17 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
+  return _c("div", { staticClass: "text-center mt-3" }, [
     _c("h1", { staticClass: "text-4xl" }, [_vm._v("Upload")]),
     _vm._v(" "),
     _c("section", { attrs: { id: "content" } }, [
       _c("input", {
-        staticClass: "btn btn-green",
+        staticClass: "btn btn-success",
         attrs: { type: "file", id: "files", multiple: "" },
         on: { change: this.$root.handleFileSelect }
       }),
       _vm._v(" "),
-      _c("hr"),
-      _vm._v(" "),
-      _c("h2", [_vm._v("FileInfo")]),
-      _vm._v(" "),
-      _c("div", { attrs: { id: "file-info" } }),
-      _vm._v(" "),
-      _c("hr"),
-      _vm._v(" "),
-      _c("div", { staticClass: "h-64 w-auto overflow-scroll" }, [
-        _c("pre", {
-          staticClass: "text-4xl",
-          domProps: { innerHTML: _vm._s(_vm.table_data) }
-        })
-      ])
+      _c("div", { attrs: { id: "file-info" } })
     ])
   ])
 }
@@ -76521,12 +76502,26 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_1___default.a({
       });
       this.csv_data = op;
       this.data_set = true;
+      this.enable_buttons();
+    },
+    enable_buttons: function enable_buttons() {
+      if (this.data_set) {
+        var elements = document.querySelectorAll(".on-data-set");
+
+        for (var i = 0; i < elements.length; i++) {
+          elements[i].setAttribute("class", "btn btn-lg btn-info on-data-set");
+        }
+      }
     }
   },
-  created: function created() {// this.csv_data = d3.csv('csv/spiderIndia_21082020.csv');
-    // this.csv_data = d3.csv('csv/x5804.csv');
-    // this.csv_data = d3.csv('csv/b.csv');
-    // this.data_set = true;
+  mounted: function mounted() {
+    if (!this.data_set) {
+      var elements = document.querySelectorAll(".on-data-set");
+
+      for (var i = 0; i < elements.length; i++) {
+        elements[i].setAttribute("class", "btn btn-lg btn-danger disabled on-data-set");
+      }
+    }
   },
   router: new vue_router__WEBPACK_IMPORTED_MODULE_2__["default"](_routes__WEBPACK_IMPORTED_MODULE_3__["default"])
 });

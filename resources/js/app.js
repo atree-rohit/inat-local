@@ -40,13 +40,26 @@ let app = new Vue ({
 			});
 			this.csv_data = op;
 			this.data_set = true;
+			this.enable_buttons();
+		},
+		enable_buttons: function (){
+			if(this.data_set){
+			const elements = document.querySelectorAll(".on-data-set");
+			for (var i=0; i < elements.length; i++) {
+				elements[i].setAttribute("class", "btn btn-lg btn-info on-data-set");
+			}
 		}
+
+		},
+
 	},
-	created() {
-		// this.csv_data = d3.csv('csv/spiderIndia_21082020.csv');
-		// this.csv_data = d3.csv('csv/x5804.csv');
-		// this.csv_data = d3.csv('csv/b.csv');
-		// this.data_set = true;
+	mounted() {
+		if(!this.data_set){
+			const elements = document.querySelectorAll(".on-data-set");
+			for (var i=0; i < elements.length; i++) {
+				elements[i].setAttribute("class", "btn btn-lg btn-danger disabled on-data-set");
+			}
+		}
 	},
 
 	router: new VueRouter(routes)
